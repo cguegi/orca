@@ -1,0 +1,18 @@
+---
+
+- name: Install Ambari repo.
+  get_url: url=http://public-repo-1.hortonworks.com/ambari/centos6/2.x/updates/2.4.0.1/ambari.repo dest=/etc/yum.repos.d/ambari.repo
+
+- name: install ambari-agent
+  yum: name=ambari-agent state=latest
+
+- name: Configure ambari-server hostname in ambari-agent configuration
+  lineinfile: dest=/etc/ambari-agent/conf/ambari-agent.ini regexp=^.*hostname=.*$ line=hostname={{ item }} backup=yes
+  with_items:
+    - ambari.localdomain
+
+- name: Ensure ambari-agent is running and enabled
+  service: name=ambari-agent state=restarted enabled=yes
+
+- name : wait for agent to register
+  command : sleep 15

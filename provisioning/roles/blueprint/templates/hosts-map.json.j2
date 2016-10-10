@@ -1,0 +1,38 @@
+{
+  "blueprint" : "multi-nodes-hdp",
+  "default_password" : "admin",
+  "host_groups" :[
+    {
+      "name" : "ambari",
+      "hosts" : [
+        {
+          "fqdn" : "ambari.localdomain"
+        }
+      ]
+    },
+    {
+      "name" : "master1",
+      "hosts" : [
+        {
+          "fqdn" : "master1.localdomain"
+        }
+      ]
+    },
+    {
+      "name" : "master2",
+      "hosts" : [
+        {
+          "fqdn" : "master2.localdomain"
+        }
+      ]
+    },
+    {
+      "name" : "slaves",
+      "hosts" : [
+        { "fqdn" : "slave1.localdomain" },
+        { "fqdn" : "slave2.localdomain" },
+        { "fqdn" : "slave3.localdomain"}
+      ]
+    }
+  ]
+}

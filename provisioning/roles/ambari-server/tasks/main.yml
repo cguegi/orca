@@ -1,0 +1,30 @@
+---
+  - name: download Ambari repository file
+    get_url:
+      url: http://public-repo-1.hortonworks.com/ambari/centos6/2.x/updates/2.4.0.1/ambari.repo
+      dest: /etc/yum.repos.d/ambari.repo
+
+  # this doesn't work fully automated because of user input
+  - name: install ambari-server
+    shell: yum -y install ambari-server
+#    yum: name=ambari-server state=latest
+
+  - name: Ensure ambari-server is stopped
+    service: name=ambari-server state=stopped
+
+  - name : Create folder
+    file : dest=/opt/ambari-install state=directory mode=0755
+
+  - name: configure ambari-server
+    shell: creates=/opt/ambari-install/ansible.done ambari-server setup -j /usr/java/latest/ -s > /tmp/ambari-install-output executable=/bin/bash
+    environment:
+      JAVA_HOME: '/usr/java/latest/'
+
+  - name : check if ambari-server is installed
+    wait_for : path=/tmp/ambari-install-output search_regex="completed successfully"
+
+  - name : start ambari server and enabled at reboot
+    service : name=ambari-server state=restarted enabled=yes
+
+  - name : check if ambari-server is up
+    wait_for : host=127.0.0.1 port=8080 delay=10

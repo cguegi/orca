@@ -1,0 +1,76 @@
+---
+- name: "Build hosts file"
+  lineinfile: dest=/etc/hosts regexp='.*{{ item }}$' line="{{ hostvars[item]['ansible_ssh_host'] }} {{item}}.localdomain" state=present
+  with_items: groups['all']
+
+- name: install default packages
+  yum: name={{ item }} state=latest
+  with_items:
+    - libselinux-python
+    - ntp
+    - wget
+    - screen
+    - epel-release
+    - rpm
+
+- name: Disable selinux
+  selinux: state=disabled
+
+- name: download jdk tarball as RPM file
+  get_url:
+    url: http://download.oracle.com/otn-pub/java/jdk/8u102-b14/jdk-8u102-linux-x64.rpm
+    dest: /tmp/jdk-8u102-linux-x64.rpm
+    headers: 'Cookie:oraclelicense=accept-securebackup-cookie'
+
+- name: install oracle jdk 1.8
+  yum: name=/tmp/jdk-8u102-linux-x64.rpm  state=present
+
+- name: update java alternatives setting
+  alternatives: name=java link=/usr/bin/java path=/usr/java/jdk1.8.0_102/bin/java
+
+#  - name: Disable IPv6
+#    sysctl: name="net.ipv6.conf.all.disable_ipv6" value=1 state=present
+#    sysctl: name="net.ipv6.conf.default.disable_ipv6" value=1 state=present
+#    sysctl: name="net.ipv6.conf.lo.disable_ipv6" value=1 state=present
+
+- name: Disable transparent hugepage
+  shell: echo never > /sys/kernel/mm/redhat_transparent_hugepage/enabled
+  shell: echo never > /sys/kernel/mm/redhat_transparent_hugepage/defrag
+#  shell: echo 'for i in /sys/kernel/mm/*transparent_hugepage/enabled; do echo never > $i; done' >> /etc/rc.local
+#  shell: echo 'for i in /sys/kernel/mm/*transparent_hugepage/defrag; do echo never > $i; done' >> /etc/rc.local
+#  shell: echo 'for i in /sys/kernel/mm/*transparent_hugepage/khugepaged/defrag; do echo no > $i; done' >> /etc/rc.local
+#  shell: for i in /sys/kernel/mm/*transparent_hugepage/enabled; do echo never > $i; done
+#  shell: for i in /sys/kernel/mm/*transparent_hugepage/defrag; do echo never > $i; done
+#  shell: for i in /sys/kernel/mm/*transparent_hugepage/khugepaged/defrag; do echo no $i; done
+
+#  - name: Update OpenSSL lib
+#    yum: name=openssl state=latest
+
+- name: Ensure ntpd is running and enabled
+  service: name=ntpd state=started enabled=yes
+
+- name: ensure iptables is stopped and is not running at boot time.
+  service: name=iptables state=stopped enabled=no
+
+- name: ensure ip6tables is stopped and is not running at boot time.
+  service: name=ip6tables state=stopped enabled=no
+
+- name: Set nofile limits
+  lineinfile: dest=/etc/security/limits.conf
+            insertbefore="^# End of file"
+            state=present
+            line="{{ item }}"
+  with_items:
+    - "* soft nofile 32768"
+    - "* hard nofile 32768"
+
+- name: Set nproc limits
+  lineinfile: dest=/etc/security/limits.d/90-nproc.conf
+            insertafter=EOF
+            state=present
+            create=yes
+            line="{{ item }}"
+            mode=0644
+  with_items:
+    - "* soft nproc 32768"
+    - "* hard nproc 32768"

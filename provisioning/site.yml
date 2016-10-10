@@ -1,0 +1,29 @@
+# This is your main playbook you will run with:
+# ansible-playbook site.yml
+# You can kick off everything from this playbook.
+# Or, you can create separate playbooks in this directory for specific orchestration events.
+
+---
+- name: Apply common configuration to all target nodes
+  hosts: all
+  sudo: yes
+  roles:
+    - common
+
+- name: Install Ambari server
+  hosts: ambari
+  sudo: yes
+  roles:
+    - ambari-server
+
+- name: Install Ambari agents
+  hosts: all
+  sudo: yes
+  roles:
+    - ambari-agent
+
+- name: Run the Blueprint
+  hosts: ambari
+  sudo: yes
+  roles:
+    - blueprint

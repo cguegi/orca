@@ -1,0 +1,51 @@
+{
+  "configurations" : [
+ 
+  ],
+  "host_groups" : [
+    { "name" : "ambari",
+      "components" : [
+        { "name" : "HDFS_CLIENT" },
+        { "name" : "MAPREDUCE2_CLIENT" },
+        { "name" : "YARN_CLIENT" },
+        { "name" : "ZOOKEEPER_CLIENT" },
+        { "name" : "METRICS_COLLECTOR" },
+        { "name" : "METRICS_MONITOR" },
+        { "name" : "ZOOKEEPER_SERVER" }
+      ],
+      "cardinality" : "1"
+    },
+    { "name" : "master1",
+      "components" : [
+        { "name" : "HISTORYSERVER" },
+        { "name" : "APP_TIMELINE_SERVER" },
+        { "name" : "METRICS_COLLECTOR" },
+        { "name" : "NAMENODE" },
+        { "name" : "ZOOKEEPER_SERVER" }
+      ],
+      "cardinality" : "1"
+    },
+    { "name" : "master2",
+      "components" : [
+        { "name" : "SECONDARY_NAMENODE" },
+        { "name" : "RESOURCEMANAGER" },
+        { "name" : "ZOOKEEPER_SERVER" },
+        { "name" : "METRICS_COLLECTOR" }
+      ],
+      "cardinality" : "1"
+    },
+    { "name" : "slaves",
+      "components" : [
+          { "name" : "DATANODE" },
+          { "name" : "METRICS_COLLECTOR" },
+          { "name" : "NODEMANAGER" }
+      ],
+      "cardinality" : "3"
+    }
+  ],
+  "Blueprints" : {
+    "blueprint_name" : "multi-nodes-hdp",
+    "stack_name" : "HDP",
+    "stack_version" : "2.5"
+  }
+}

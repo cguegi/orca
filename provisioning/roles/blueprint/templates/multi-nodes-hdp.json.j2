@@ -19,7 +19,7 @@
       "components" : [
         { "name" : "HISTORYSERVER" },
         { "name" : "APP_TIMELINE_SERVER" },
-        { "name" : "METRICS_COLLECTOR" },
+        { "name" : "METRICS_MONITOR" },
         { "name" : "NAMENODE" },
         { "name" : "ZOOKEEPER_SERVER" }
       ],
@@ -30,14 +30,14 @@
         { "name" : "SECONDARY_NAMENODE" },
         { "name" : "RESOURCEMANAGER" },
         { "name" : "ZOOKEEPER_SERVER" },
-        { "name" : "METRICS_COLLECTOR" }
+        { "name" : "METRICS_MONITOR" }
       ],
       "cardinality" : "1"
     },
     { "name" : "slaves",
       "components" : [
           { "name" : "DATANODE" },
-          { "name" : "METRICS_COLLECTOR" },
+          { "name" : "METRICS_MONITOR" },
           { "name" : "NODEMANAGER" }
       ],
       "cardinality" : "3"

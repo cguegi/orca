@@ -22,7 +22,7 @@ import sys
 import requests
 
 AMBARI_SERVER = "ambari.localdomain"
-CLUSTER_NAME = "hdp250"
+CLUSTER_NAME = "hdp260"
 BLUEPRINT_NAME = "multi-nodes-hdp"
 
 def main():
@@ -37,7 +37,7 @@ def main():
   	if r.status_code != 201:
   		print "return code is %s" % r.status_code
   		print r.text
-  	#	sys.exit(1)
+		sys.exit(1)
 
   	# Read blueprint file
   	f = open('/opt/ambari-install/hosts-map.json','r')
@@ -51,6 +51,7 @@ def main():
   	if r.status_code != 202:
   		print "return code is %s" % r.status_code
   		print r.text
+		sys.exit(1)
 
   	ambari_url = "http://" + AMBARI_SERVER + ":8080/api/v1/clusters"
   	r = requests.get(ambari_url, auth=("admin","admin"))

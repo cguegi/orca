@@ -4,7 +4,8 @@
   get_url: url=http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.5.0.3/ambari.repo dest=/etc/yum.repos.d/ambari.repo
 
 - name: install ambari-agent
-  yum: name=ambari-agent state=latest
+  shell: yum -y install ambari-agent
+  #yum: name=ambari-agent state=latest
 
 - name: Configure ambari-server hostname in ambari-agent configuration
   lineinfile: dest=/etc/ambari-agent/conf/ambari-agent.ini regexp=^.*hostname=.*$ line=hostname={{ item }} backup=yes

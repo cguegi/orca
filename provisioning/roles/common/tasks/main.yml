@@ -1,7 +1,7 @@
 ---
-- name: "Build hosts file"
-  lineinfile: dest=/etc/hosts regexp='.*{{ item }}$' line="{{ hostvars[item]['ansible_ssh_host'] }} {{item}}.localdomain" state=present
-  with_items: groups['all']
+#- name: "Build hosts file"
+#  lineinfile: dest=/etc/hosts regexp='.*{{ item }}$' line="{{ hostvars[item]['ansible_host'] }} {{item}}.localdomain" state=present
+#  with_items: "{{ groups['all'] }}"
 
 - name: install default packages
   yum: name={{ item }} state=latest
@@ -16,11 +16,11 @@
 - name: Disable selinux
   selinux: state=disabled
 
-- name: download jdk tarball as RPM file
-  get_url:
-    url: http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.rpm
-    dest: /tmp/jdk-8u131-linux-x64.rpm
-    headers: 'Cookie:oraclelicense=accept-securebackup-cookie'
+#- name: download jdk tarball as RPM file
+#  get_url:
+#    url: http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.rpm
+#    dest: /tmp/jdk-8u131-linux-x64.rpm
+#    headers: 'Cookie:oraclelicense=accept-securebackup-cookie'
 
 - name: install oracle jdk 1.8
   yum: name=/tmp/jdk-8u131-linux-x64.rpm  state=present

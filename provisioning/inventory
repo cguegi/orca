@@ -1,25 +1,25 @@
 # Static inventory file
 
 [ambari]
-ambari ansible_ssh_host=192.168.50.3
+ambari ansible_host=192.168.50.3
 
 [master1]
-master1 ansible_ssh_host=192.168.50.4
+master1 ansible_host=192.168.50.4
 
 [master2]
-master2 ansible_ssh_host=192.168.50.5
+master2 ansible_host=192.168.50.5
 
 [masters:children]
 master1
 master2
 
 [slave3]
-slave3 ansible_ssh_host=192.168.50.8
+slave3 ansible_host=192.168.50.8
 
 [slaves]
-slave1 ansible_ssh_host=192.168.50.6
-slave2 ansible_ssh_host=192.168.50.7
-slave3 ansible_ssh_host=192.168.50.8
+slave1 ansible_host=192.168.50.6
+slave2 ansible_host=192.168.50.7
+slave3 ansible_host=192.168.50.8
 
 [all:children]
 ambari
@@ -28,4 +28,4 @@ master2
 slaves
 
 [all:vars]
-ansible_ssh_user=vagrant
+ansible_user=vagrant

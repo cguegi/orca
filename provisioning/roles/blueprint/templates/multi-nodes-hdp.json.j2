@@ -11,7 +11,9 @@
         { "name" : "ZOOKEEPER_CLIENT" },
         { "name" : "METRICS_COLLECTOR" },
         { "name" : "METRICS_MONITOR" },
-        { "name" : "ZOOKEEPER_SERVER" }
+        { "name" : "ZOOKEEPER_SERVER" },
+        { "name" : "SPARK_CLIENT" },
+        { "name" : "METRICS_GRAFANA" }
       ],
       "cardinality" : "1"
     },
@@ -21,7 +23,8 @@
         { "name" : "APP_TIMELINE_SERVER" },
         { "name" : "METRICS_MONITOR" },
         { "name" : "NAMENODE" },
-        { "name" : "ZOOKEEPER_SERVER" }
+        { "name" : "ZOOKEEPER_SERVER" },
+        { "name" : "SPARK_THRIFTSERVER" }
       ],
       "cardinality" : "1"
     },
@@ -30,7 +33,8 @@
         { "name" : "SECONDARY_NAMENODE" },
         { "name" : "RESOURCEMANAGER" },
         { "name" : "ZOOKEEPER_SERVER" },
-        { "name" : "METRICS_MONITOR" }
+        { "name" : "METRICS_MONITOR" },
+        { "name" : "SPARK_JOBHISTORYSERVER" }
       ],
       "cardinality" : "1"
     },

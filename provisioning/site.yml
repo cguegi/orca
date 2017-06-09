@@ -4,26 +4,30 @@
 # Or, you can create separate playbooks in this directory for specific orchestration events.
 
 ---
-- name: Apply common configuration to all target nodes
-  hosts: all
-  sudo: yes
-  roles:
-    - common
+#- name: Apply common configuration to all target nodes
+#  hosts: all
+#  become: yes
+#  become_user: root
+#  roles:
+#    - common
 
-- name: Install Ambari server
-  hosts: ambari
-  sudo: yes
-  roles:
-    - ambari-server
-
-- name: Install Ambari agents
-  hosts: all
-  sudo: yes
-  roles:
-    - ambari-agent
-
+#- name: Install Ambari server
+#  hosts: ambari
+#  become: yes
+#  become_user: root
+#  roles:
+#    - ambari-server
+#
+#- name: Install Ambari agents
+#  hosts: all
+#  become: yes
+#  become_user: root
+#  roles:
+#    - ambari-agent
+#
 - name: Run the Blueprint
   hosts: ambari
-  sudo: yes
+  become: yes
+  become_user: root
   roles:
     - blueprint

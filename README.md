@@ -22,7 +22,7 @@ To check and make sure you have the plugin installed execute the following:
 If you have it installed you should see the following listed in the output:
 
   ```
-  vagrant-hostmanager (1.8.1)
+  vagrant-hostmanager (1.8.5)
   ```
 If it is not installed, you can install it with the following command:
 
